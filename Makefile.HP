@@ -1,0 +1,22 @@
+CXXFLAGS= +DASD64000 +O4 +Oall -I.
+#CXXFLAGS=-O3 -Wall -W -Wcast-qual -Wpointer-arith -Wcast-align -pedantic -fno-schedule-insns -fschedule-insns2 -fstrict-aliasing -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -I .
+#LDFLAGS=-L . -lm -static
+#CXXFLAGS=-march=k8 -m32 -O3 -std=gnu99 -W -pedantic -Wcast-qual -Wpointer-arith -Wcast-align -fno-schedule-insns -fschedule-insns2 -fstrict-aliasing -funroll-loops -fprefetch-loop-arrays -fomit-frame-pointer -I .
+#CXXFLAGS=-O0 -g -I .
+
+LDFLAGS=-L . -lrt -lpthread -lm 
+
+cCC=/opt/softbench/bin/cc
+CXX=cc
+
+all: test
+
+%.o: %.c
+	$(cCC) -c $(CXXFLAGS) -o $@ $<
+
+test: test.o my_thr_lib.o
+	$(cCC) $(LDFLAGS) -o $@ test.o my_thr_lib.o
+
+clean:
+	rm -f *.o test *.c~ *.h~
+
